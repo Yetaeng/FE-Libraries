@@ -1,3 +1,5 @@
+// using Redux
+
 const INCREASE = "INCREASE";
 const DECREASE = "DECREASE";
 

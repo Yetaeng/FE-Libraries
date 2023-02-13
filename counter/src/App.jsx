@@ -1,19 +1,17 @@
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { increase, decrease } from "./store/slices/counter";
+import { increament, decrement } from './store/slices/counterToolkit';
 
 function App() {
-  const number = useSelector((state) => state.counter.number);
+  const value = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
-
-  const onDecrease = () => dispatch(decrease());
-  const onIncrease = () => dispatch(increase());
 
   return (
     <div className="App">
-      <button onClick={onDecrease}>-</button>
-      <span>{number}</span>
-      <button onClick={onIncrease}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <span>{value}</span>
+      <button onClick={() => dispatch(increament())}>+</button>
     </div>
   );
 }

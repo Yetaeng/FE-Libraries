@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import counter from "./slices/counter";
-import { composeWithDevTools } from "redux-devtools-extension";
+import counter from './slices/counterToolkit';
+// import { composeWithDevTools } from "redux-devtools-extension";
 
-export const rootReducer = combineReducers({ counter, composeWithDevTools });
+export const rootReducer = combineReducers({ counter });
