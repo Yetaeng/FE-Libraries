@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { create } from "../slices/todos";
+import { create } from "../slices/todosToolkit";
 
 export default function ToDoInput() {
   const [input, setInput] = useState("");
@@ -12,7 +12,8 @@ export default function ToDoInput() {
 
   const onSubmitInput = (e) => {
     e.preventDefault();
-    dispatch(create(input));
+    dispatch(create({ id: Date.now(), text: input }));
+    // dispatch(create(input));
     setInput("");
   };
 
