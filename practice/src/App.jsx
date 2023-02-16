@@ -1,21 +1,26 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, addPerson, addMessage, remove } from "./store/slice";
-import Person from './store/Person';
+import { addItem, addPerson, addMessage } from "./store/slice";
+import Person from "./store/Person";
+import Item from "./store/Item";
 
 function App() {
-  const [item, setItem] = useState("");
+  const [item, setItem] = useState({});
   const [person, setPerson] = useState({});
   const [text, setText] = useState("");
 
-  const items = useSelector(state => state.add.items);
-  const people = useSelector(state => state.add.people);
-  const message = useSelector(state => state.add.message)
+  const items = useSelector((state) => state.add.items);
+  const people = useSelector((state) => state.add.people);
+  const message = useSelector((state) => state.add.message);
 
   const dispatch = useDispatch();
 
-  const handleChange = e => {
+  useEffect(() => {
+    // console.log(people);
+  }, [people]);
+
+  const handleChange = (e) => {
     setPerson({ ...person, [e.target.name]: e.target.value });
   };
 
@@ -23,29 +28,34 @@ function App() {
     <div className="App">
       <div>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
-            dispatch(addItem(item));
+            dispatch(addItem(item.something));
             setItem("");
           }}
         >
           <input
             type="text"
-            name="item"
-            value={item}
-            placeholder="item"
-            onChange={e => {
-              setItem(e.target.value);
+            name="something"
+            value={item.something || ""}
+            placeholder="something"
+            onChange={(e) => {
+              setItem({ ...item, [e.target.name]: e.target.value });
+              // setItem(e.target.value);
             }}
           />
           <button>add item</button>
         </form>
-        <p>{items}</p>
+        <ul>
+          {items.map((item) => (
+            <Item key={item.id} item={item} />
+          ))}
+        </ul>
       </div>
       <hr />
       <div>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             dispatch(addPerson(person));
             setPerson({});
@@ -75,7 +85,7 @@ function App() {
           <button>add person</button>
         </form>
         <ul>
-          {people.map(person => (
+          {people.map((person) => (
             <Person key={person.id} info={person} />
           ))}
         </ul>
@@ -83,7 +93,7 @@ function App() {
       <hr />
       <div>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             dispatch(addMessage(text));
             setText("");
@@ -94,7 +104,7 @@ function App() {
             name="text"
             value={text}
             placeholder="message"
-            onChange={e => {
+            onChange={(e) => {
               setText(e.target.value);
             }}
           />

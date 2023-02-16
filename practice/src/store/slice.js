@@ -1,42 +1,55 @@
-const ADD_ITEM = 'ADD_ITEM';
-const ADD_PERSON = 'ADD_PERSON';
-const ADD_MESSAGE = 'ADD_MESSAGE';
-const REMOVE = 'REMOVE'
+const ADD_ITEM = "ADD_ITEM";
+const ADD_PERSON = "ADD_PERSON";
+const UPDATE_PERSON = "UPDATE_PERSON";
+const ADD_MESSAGE = "ADD_MESSAGE";
+const REMOVE = "REMOVE";
+const UPDATE = "UPDATE";
 
-export const addItem = item => ({
+export const addItem = (something) => ({
   type: ADD_ITEM,
-  item
+  item: {
+    id: Date.now(),
+    something: something || "",
+  },
 });
 
-export const addPerson = ({name, age, address}) => ({
+export const addPerson = ({ name, age, address }) => ({
   type: ADD_PERSON,
   person: {
-    id: Date.now(), 
-    name: name || '',
-    age: age || '',
-    address: address || ''
-  }
-})
+    id: Date.now(),
+    name: name || "",
+    age: age || "",
+    address: address || "",
+  },
+});
 
-export const addMessage = text => ({
+export const updatePerson = ({ id, name, age, address }) => ({
+  type: UPDATE_PERSON,
+  person: {
+    id,
+    name,
+    age,
+    address,
+  },
+});
+
+export const addMessage = (text) => ({
   type: ADD_MESSAGE,
-  text
-})
+  text,
+});
 
-export const remove = id => ({
+export const remove = (id) => ({
   type: REMOVE,
-  id
-})
+  id,
+});
+
+export const update = () => ({
+  type: UPDATE,
+});
 
 const initialState = {
   items: [],
   people: [],
-  // people: [{
-  //   id: "",
-  //   name: "",
-  //   age: "",
-  //   address: "",
-  // }],
   message: "",
 };
 
@@ -45,22 +58,31 @@ export function add(state = initialState, action) {
     case ADD_ITEM:
       return {
         ...state,
-        items: state.items.concat(action.item)
-      }
-    case ADD_PERSON:
+        items: state.items.concat(action.item),
+      };
+    case ADD_PERSON: {
       return {
         ...state,
-        people: state.people.concat(action.person)
+        people: state.people.concat(action.person),
+      };
+    }
+    case UPDATE_PERSON:
+      return {
+        ...state,
+        people: state.people.map((person) =>
+          person !== action.person ? action.person : person
+        ),
       };
     case ADD_MESSAGE:
       return {
         ...state,
-        message: action.text
+        message: action.text,
       };
     case REMOVE:
       return {
         ...state,
-        people: state.people.filter(person => person.id !== action.id)
+        items: state.items.filter((item) => item.id !== action.id),
+        people: state.people.filter((person) => person.id !== action.id),
       };
     default:
       return state;
