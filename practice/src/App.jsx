@@ -16,10 +16,6 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // console.log(people);
-  }, [people]);
-
   const handleChange = (e) => {
     setPerson({ ...person, [e.target.name]: e.target.value });
   };
@@ -41,7 +37,6 @@ function App() {
             placeholder="something"
             onChange={(e) => {
               setItem({ ...item, [e.target.name]: e.target.value });
-              // setItem(e.target.value);
             }}
           />
           <button>add item</button>

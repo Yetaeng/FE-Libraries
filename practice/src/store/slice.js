@@ -49,7 +49,14 @@ export const update = () => ({
 
 const initialState = {
   items: [],
-  people: [],
+  people: [
+    // {
+    //   id: "1",
+    //   name: "",
+    //   age: "",
+    //   address: "",
+    // },
+  ],
   message: "",
 };
 
@@ -70,7 +77,12 @@ export function add(state = initialState, action) {
       return {
         ...state,
         people: state.people.map((person) =>
-          person !== action.person ? action.person : person
+          person.id === action.person.id
+            ? Object.entries(person).toString() !==
+              Object.entries(action.person).toString()
+              ? action.person
+              : person
+            : person
         ),
       };
     case ADD_MESSAGE:
